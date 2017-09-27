@@ -1,3 +1,8 @@
 var Game = require('./Game.js');
+var Field = require('./Field.js');
 
-Game.test();
+Game.init();
+
+
+Field.init();
+Field.render();
