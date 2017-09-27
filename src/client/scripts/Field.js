@@ -37,7 +37,13 @@ Field.render = function(){
                 Game.ctx.beginPath();
                 Game.ctx.lineWidth="3";
                 Game.ctx.strokeStyle = Field.field[x][y].color;
-                Game.ctx.rect(x*Field.blocksize+Field.offsetx, y*Field.blocksize+Field.offsety, Field.blocksize, Field.blocksize);
+
+                Game.ctx.rect(
+                    x*Field.blocksize+Field.offsetx,
+                    ((Field.height-1)*Field.blocksize)+Field.offsety-(y*Field.blocksize),
+                    Field.blocksize,
+                    Field.blocksize
+                );
                 Game.ctx.stroke();
             }
         }
@@ -46,7 +52,12 @@ Field.render = function(){
     Game.ctx.beginPath();
     Game.ctx.lineWidth="1";
     Game.ctx.strokeStyle = "black";
-    Game.ctx.rect(Field.offsetx,Field.offsety,Field.width*Field.blocksize,Field.height * Field.blocksize);
+    Game.ctx.rect(
+        Field.offsetx,
+        Field.offsety,
+        Field.width*Field.blocksize,
+        Field.height * Field.blocksize
+    );
     Game.ctx.stroke();
 };
 
