@@ -111,16 +111,20 @@ Game.movePlayer = function(x,y){
     //Test if box would collide with other boxes
     for (var i=0;i<4;i++){
         if ( Field.field[Game.player.position.x - Game.player.figure[i].x+x][Game.player.position.y - Game.player.figure[i].y+y].show == true){
-            this.x=0;
-            this.y=0;
-            for (var j=0;j<4;j++){
-                Field.field[Game.player.position.x - Game.player.figure[j].x][Game.player.position.y - Game.player.figure[j].y] = {
-                    show: true,
-                    color: Game.player.color
-                };
+            if (x == 0){   
+                x=0;
+                y=0;
+                for (var j=0;j<4;j++){
+                    Field.field[Game.player.position.x - Game.player.figure[j].x][Game.player.position.y - Game.player.figure[j].y] = {
+                        show: true,
+                        color: Game.player.color
+                    };
+                }
+                Game.spawn();
+                return;
+            } else {
+                x = 0;
             }
-            Game.spawn();
-            return;
         }
     }
 
