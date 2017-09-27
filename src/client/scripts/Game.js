@@ -7,7 +7,30 @@ Game.player = {};
 
 Game.start = function(){
     setInterval(this.tick, 50);
-    setInterval(this.movePlayer, 1000);
+    setInterval(function(){Game.movePlayer(0,-1)}, 1000);
+    document.addEventListener("keydown", function(e){
+        if (e.keyCode == '40') {
+            // down arrow
+            Game.movePlayer(0,-1);
+        }
+        else if (e.keyCode == '37') {
+            // left arrow
+            Game.movePlayer(-1,0);      
+        }
+        else if (e.keyCode == '39') {
+            // right arrow
+            Game.movePlayer(1,0);
+        }
+        else if (e.keyCode == '38') {
+            // right arrow
+            Game.movePlayer(-1,0);
+        }
+    });
+
+};
+
+Game.moveHorizontal = function(direction){
+
 };
 
 Game.tick = function(){
@@ -44,7 +67,7 @@ Game.spawn = function(){
 
 
 
-Game.movePlayer = function(){
+Game.movePlayer = function(x,y){
     // Jede Koordinate der gewählten Figur iterieren
     for (var i=0;i<4;i++){
         // Koordinate im Spielfeld setzen
@@ -53,7 +76,8 @@ Game.movePlayer = function(){
             color: "black"
         };
     }  
-    Game.player.position.y--;
+    Game.player.position.y+=y;
+    Game.player.position.x+=x;
     // Jede Koordinate der gewählten Figur iterieren
     for (var i=0;i<4;i++){
         // Koordinate im Spielfeld setzen
