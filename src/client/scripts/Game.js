@@ -22,14 +22,11 @@ Game.start = function(){
             Game.movePlayer(1,0);
         }
         else if (e.keyCode == '38') {
-            // right arrow
-            Game.movePlayer(-1,0);
+            // up arrow
+            // Game.movePlayer(0,1);
+            Game.spawn();
         }
     });
-
-};
-
-Game.moveHorizontal = function(direction){
 
 };
 
