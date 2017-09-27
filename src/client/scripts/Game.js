@@ -52,12 +52,18 @@ Game.spawn = function(){
     var figure = Boxes[index];
     Game.player.figure = figure;
 
+    var r = Math.floor(Math.random()*256);
+    var g = Math.floor(Math.random()*256);
+    var b = Math.floor(Math.random()*256);
+
+    Game.player.color = 'rgb('+r+','+g+','+b+')';
+
     // Jede Koordinate der gewählten Figur iterieren
     for (var i=0;i<4;i++){
         // Koordinate im Spielfeld setzen
         Field.field[spawnpoint.x - figure[i].x][spawnpoint.y - figure[i].y] = {
             show: true,
-            color: "blue"
+            color: Game.player.color
         };
     }  
 };
@@ -70,7 +76,7 @@ Game.movePlayer = function(x,y){
         // Koordinate im Spielfeld setzen
         Field.field[Game.player.position.x - Game.player.figure[i].x][Game.player.position.y - Game.player.figure[i].y] = {
             show: false,
-            color: "black"
+            color: "green"
         };
     }  
     Game.player.position.y+=y;
@@ -80,7 +86,7 @@ Game.movePlayer = function(x,y){
         // Koordinate im Spielfeld setzen
         Field.field[Game.player.position.x - Game.player.figure[i].x][Game.player.position.y - Game.player.figure[i].y] = {
             show: true,
-            color: "blue"
+            color: Game.player.color
         };
     }  
 };
