@@ -1,8 +1,10 @@
 var Game = require('./Game.js');
+var App = require('./App.js');
 var Field = require('./Field.js');
 
-Game.init();
-
-
+App.init();
 Field.init();
-Field.render();
+
+Game.spawn();
+
+Game.start();

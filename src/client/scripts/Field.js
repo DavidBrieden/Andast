@@ -1,4 +1,5 @@
-var Game = require('./Game.js');
+var App = require("./App.js");
+
 
 var Field = {};
 
@@ -22,10 +23,6 @@ Field.init = function(){
         Field.field.push(column);
     }
     
-    Field.field[0][0] = {
-        show: true,
-        color: "blue"
-    };
 
 };
 
@@ -34,31 +31,31 @@ Field.render = function(){
     for(var x=0;x<Field.width;x++){
         for(var y=0;y<Field.height;y++){
             if (Field.field[x][y].show == true) {
-                Game.ctx.beginPath();
-                Game.ctx.lineWidth="3";
-                Game.ctx.strokeStyle = Field.field[x][y].color;
+                App.ctx.beginPath();
+                App.ctx.lineWidth="3";
+                App.ctx.strokeStyle = Field.field[x][y].color;
 
-                Game.ctx.rect(
+                App.ctx.rect(
                     x*Field.blocksize+Field.offsetx,
                     ((Field.height-1)*Field.blocksize)+Field.offsety-(y*Field.blocksize),
                     Field.blocksize,
                     Field.blocksize
                 );
-                Game.ctx.stroke();
+                App.ctx.stroke();
             }
         }
     }
 
-    Game.ctx.beginPath();
-    Game.ctx.lineWidth="1";
-    Game.ctx.strokeStyle = "black";
-    Game.ctx.rect(
+    App.ctx.beginPath();
+    App.ctx.lineWidth="1";
+    App.ctx.strokeStyle = "black";
+    App.ctx.rect(
         Field.offsetx,
         Field.offsety,
         Field.width*Field.blocksize,
         Field.height * Field.blocksize
     );
-    Game.ctx.stroke();
+    App.ctx.stroke();
 };
 
 
