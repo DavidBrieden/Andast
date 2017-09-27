@@ -1,4 +1,5 @@
 var gulp        = require('gulp');
+var gutil        = require('gulp-util');
 var browserify  = require('browserify');
 var watchify    = require('watchify');
 var babelify    = require('babelify');
@@ -21,7 +22,7 @@ gulp.task('browserify', function(callback) {
     var bundle = function(){
         bundler
             .bundle()
-            .on('error', function(err){console.log(err.message)})
+            .on('error', function(err){gutil.log(err.message)})
             .pipe(source('app.js'))
             // Specify the output destination
             .pipe(gulp.dest('src/client/wwwroot'));
