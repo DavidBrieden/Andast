@@ -96,8 +96,18 @@ Game.spawn = function(){
 };
 
 
-
 Game.movePlayer = function(x,y){
+
+    //Test if box would be still in field
+    for (var i=0;i<4;i++){
+        if (Game.player.position.x - Game.player.figure[i].x + x < 0 || Game.player.position.x - Game.player.figure[i].x + x >= Field.width){
+            x = 0;
+        } else if (Game.player.position.y - Game.player.figure[i].y + y < 0){
+            Game.spawn();
+            return;
+        } 
+        
+    }
     // Jede Koordinate der gewählten Figur iterieren
     for (var i=0;i<4;i++){
         // Koordinate im Spielfeld setzen
@@ -106,6 +116,23 @@ Game.movePlayer = function(x,y){
             color: "green"
         };
     }  
+
+    //Test if box would collide with other boxes
+    for (var i=0;i<4;i++){
+        if ( Field.field[Game.player.position.x - Game.player.figure[i].x+x][Game.player.position.y - Game.player.figure[i].y+y].show == true){
+            this.x=0;
+            this.y=0;
+            for (var j=0;j<4;j++){
+                Field.field[Game.player.position.x - Game.player.figure[j].x][Game.player.position.y - Game.player.figure[j].y] = {
+                    show: true,
+                    color: Game.player.color
+                };
+            }
+            Game.spawn();
+            return;
+        }
+    }
+
     Game.player.position.y+=y;
     Game.player.position.x+=x;
     // Jede Koordinate der gewählten Figur iterieren
