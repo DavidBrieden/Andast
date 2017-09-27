@@ -23,34 +23,25 @@ Game.start = function(){
         }
         else if (e.keyCode == '38') {
             // up arrow
-            // Game.movePlayer(0,1);
             Game.spawn();
         }else if (e.keyCode == '32') {
             // press space to flip boxes
+            
+            // prevent scrolling
             e.preventDefault();
+            var flip = Array.from(Game.player.figure);
             for (var i=0;i<4;i++){
                 // Koordinate im Spielfeld setzen
                 Field.field[Game.player.position.x - Game.player.figure[i].x][Game.player.position.y - Game.player.figure[i].y] = {
-                show: false,
-                color: "green"
-            };
-    }  
-            // var flip = Array.from(Game.player.figure);
-            var flip1 = Game.player.figure[0];
-            var flip2 = Game.player.figure[1];
-            var flip3 = Game.player.figure[2];
-            var flip4 = Game.player.figure[3];
-            
-            Game.player.figure[0]={x:0-flip1.y,y:flip1.x};
-            Game.player.figure[1]={x:0-flip2.y,y:flip2.x};
-            Game.player.figure[2]={x:0-flip3.y,y:flip3.x};
-            Game.player.figure[3]={x:0-flip4.y,y:flip4.x};
-
-            /*for (var i = 0; i<4;i++){
-                flip[i].x = 1 - Game.player.figure[i].y;
-                flip[i].y = Game.player.figure[i].x;
-            }*/
-            //Game.player.figure = flip;
+                    show: false,
+                    color: "green"
+                };
+                Game.player.figure[i]={
+                    x:0-flip[i].y,
+                    y:flip[i].x
+                };
+            }  
+            // damit das Spielfeld direkt geupdatet wird
             Game.movePlayer(0,0);
         }
     });
@@ -76,7 +67,7 @@ Game.spawn = function(){
     Game.player.position = spawnpoint;
     // eine zufällige Figur auswählen
     var index = Math.floor(Math.random() * (Boxes.length));
-    var figure = Boxes[index];
+    var figure = Array.from(Boxes[index]);
     Game.player.figure = figure;
 
     var r = Math.floor(Math.random()*256);
@@ -109,8 +100,8 @@ Game.movePlayer = function(x,y){
     Game.player.position.y+=y;
     Game.player.position.x+=x;
     // Jede Koordinate der gewählten Figur iterieren
-    // Koordinate im Spielfeld setzen
     for (var i=0;i<4;i++){
+        // Koordinate im Spielfeld setzen
         Field.field[Game.player.position.x - Game.player.figure[i].x][Game.player.position.y - Game.player.figure[i].y] = {
             show: true,
             color: Game.player.color
