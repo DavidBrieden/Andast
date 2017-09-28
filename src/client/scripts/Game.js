@@ -89,6 +89,16 @@ Game.spawn = function(){
     }  
 };
 
+Game.testRow = function(y){
+    for (var i = 0; var < Field.width){
+
+        if (Field.field[i][y].show == false)
+            return false;
+
+    }
+    return true;
+
+};
 
 Game.movePlayer = function(x,y){
 
