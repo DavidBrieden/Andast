@@ -1,6 +1,5 @@
 var App = require("./App.js");
 
-
 var Field = {};
 
 Field.init = function(){
