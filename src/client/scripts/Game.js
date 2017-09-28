@@ -66,7 +66,7 @@ Game.update = function(){
 };
 
 Game.spawn = function(){
-    var spawnpoint = {x: Math.floor(Field.width/2)-1,y:Field.height-1}
+    var spawnpoint = {x: Math.floor(Field.width/2)-1,y:Field.height-3}
     Game.player.position = spawnpoint;
     // eine zufällige Figur auswählen
     var index = Math.floor(Math.random() * (Boxes.length));
@@ -112,23 +112,30 @@ Game.deleteRow = function(y){
             Field.field[j][i-1]=Field.field[j][i];
         }
     }
-}
+};
 
-Game.movePlayer = function(x,y){
-
-    //Test if box would be still in field
+Game.detectCollision = function(x,y){
     for (var i=0;i<4;i++){
         if (Game.player.position.x - Game.player.figure[i].x + x < 0 || Game.player.position.x - Game.player.figure[i].x + x >= Field.width){
-            x = 0;
+            //collision occurs during x axis movement
+            return true;
         } else if (Game.player.position.y - Game.player.figure[i].y + y < 0){
-            if (Game.testRow(Game.player.position.y - Game.player.figure[i].y)==true){
-                    Game.deleteRow(Game.player.position.y - Game.player.figure[i].y);
-                }
-            Game.spawn();
-            return;
+            //collision occurs during down movement
+            return true;
+        } else if ( Field.field[Game.player.position.x - Game.player.figure[i].x+x][Game.player.position.y - Game.player.figure[i].y+y].show == true){
+            //collision with other block
+            return true;
         } 
         
     }
+    return false;
+};
+
+Game.movePlayer = function(x,y){
+
+    var spawn = false;
+
+    
     // Jede Koordinate der gewählten Figur iterieren
     for (var i=0;i<4;i++){
         // Koordinate im Spielfeld setzen
@@ -138,26 +145,12 @@ Game.movePlayer = function(x,y){
         };
     }  
 
-    //Test if box would collide with other boxes
-    for (var i=0;i<4;i++){
-        if ( Field.field[Game.player.position.x - Game.player.figure[i].x+x][Game.player.position.y - Game.player.figure[i].y+y].show == true){
-            if (x == 0){   
-                x=0;
-                y=0;
-                for (var j=0;j<4;j++){
-                    Field.field[Game.player.position.x - Game.player.figure[j].x][Game.player.position.y - Game.player.figure[j].y] = {
-                        show: true,
-                        color: Game.player.color
-                    };
-                }
-                if (Game.testRow(Game.player.position.y - Game.player.figure[i].y)==true){
-                    Game.deleteRow(Game.player.position.y - Game.player.figure[i].y);
-                }
-                Game.spawn();
-                return;
-            } else {
-                x = 0;
-            }
+    if (Game.detectCollision(x,y) == true){
+        if (x!=0){
+            x=0;
+        } else if (y!=0){
+            y=0;
+            spawn = true;
         }
     }
 
@@ -171,6 +164,17 @@ Game.movePlayer = function(x,y){
             color: Game.player.color
         };
     }  
+
+    if (spawn == true){
+        //test if Row is full
+        for (var i=0;i<4;i++){
+            if (Game.testRow(Game.player.position.y - Game.player.figure[i].y)==true){
+                Game.deleteRow(Game.player.position.y - Game.player.figure[i].y);
+            }
+        }
+        spawn = false;
+        Game.spawn();
+    }
 };
 
 module.exports = Game;
