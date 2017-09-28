@@ -90,7 +90,7 @@ Game.spawn = function(){
 };
 
 Game.testRow = function(y){
-    for (var i = 0; var < Field.width){
+    for (var i = 0; i < Field.width; i++){
 
         if (Field.field[i][y].show == false)
             return false;
@@ -100,6 +100,20 @@ Game.testRow = function(y){
 
 };
 
+Game.deleteRow = function(y){
+    //delete full row
+    for (var i = 0; i < Field.width;i++){
+        Field.field[i][y].show = false;
+    }
+
+    //move upper rows
+    for (var i = y+1; i< Field.height;i++){
+        for(var j=0; j< Field.width;j++){
+            Field.field[j][i-1]=Field.field[j][i];
+        }
+    }
+}
+
 Game.movePlayer = function(x,y){
 
     //Test if box would be still in field
@@ -107,6 +121,9 @@ Game.movePlayer = function(x,y){
         if (Game.player.position.x - Game.player.figure[i].x + x < 0 || Game.player.position.x - Game.player.figure[i].x + x >= Field.width){
             x = 0;
         } else if (Game.player.position.y - Game.player.figure[i].y + y < 0){
+            if (Game.testRow(Game.player.position.y - Game.player.figure[i].y)==true){
+                    Game.deleteRow(Game.player.position.y - Game.player.figure[i].y);
+                }
             Game.spawn();
             return;
         } 
@@ -132,6 +149,9 @@ Game.movePlayer = function(x,y){
                         show: true,
                         color: Game.player.color
                     };
+                }
+                if (Game.testRow(Game.player.position.y - Game.player.figure[i].y)==true){
+                    Game.deleteRow(Game.player.position.y - Game.player.figure[i].y);
                 }
                 Game.spawn();
                 return;
