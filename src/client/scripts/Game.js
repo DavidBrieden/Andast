@@ -40,6 +40,9 @@ Game.start = function(){
                     x:0-flip[i].y,
                     y:flip[i].x
                 };
+                /*if (Field.field[Game.player.position.x-x][Game.player.position.y - y].show==true){
+                    Game.player.figure = flip;
+                }*/
             }  
             // damit das Spielfeld direkt geupdatet wird
             Game.movePlayer(0,0);

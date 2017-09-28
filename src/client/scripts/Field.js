@@ -34,13 +34,24 @@ Field.render = function(){
                 App.ctx.beginPath();
                 App.ctx.lineWidth="3";
                 App.ctx.strokeStyle = Field.field[x][y].color;
+                App.ctx.fillStyle = "black";
 
-                App.ctx.rect(
+                App.ctx.fillRect(
                     x*Field.blocksize+Field.offsetx,
                     ((Field.height-1)*Field.blocksize)+Field.offsety-(y*Field.blocksize),
                     Field.blocksize,
                     Field.blocksize
                 );
+
+                App.ctx.fillStyle = Field.field[x][y].color;
+
+                App.ctx.fillRect(
+                    x*Field.blocksize+Field.offsetx+Field.blocksize/10,
+                    ((Field.height-1)*Field.blocksize)+Field.offsety-(y*Field.blocksize)+Field.blocksize/10,
+                    Field.blocksize/10*8,
+                    Field.blocksize/10*8
+                );
+
                 App.ctx.stroke();
             }
         }
