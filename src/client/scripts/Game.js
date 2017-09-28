@@ -3,11 +3,13 @@ var App = require('./App.js');
 var Boxes = require('./Boxes.js');
 var Game = {};
 
+Game.speed = 1000;
+
 Game.player = {};
 
 Game.start = function(){
     setInterval(this.tick, 50);
-    setInterval(function(){Game.movePlayer(0,-1)}, 1000);
+    Game.interval = setInterval(function(){Game.setSpeed(Game.speed/=1.01); Game.movePlayer(0,-1);}, Game.speed);
     document.addEventListener("keydown", function(e){
         if (e.keyCode == '40') {
             // down arrow
@@ -50,6 +52,12 @@ Game.start = function(){
     });
 
 };
+
+Game.setSpeed = function(speed){
+    window.clearInterval(Game.interval);
+    Game.speed = speed;
+    Game.interval = setInterval(function(){Game.setSpeed(Game.speed/=1.01); Game.movePlayer(0,-1);}, Game.speed);
+}
 
 Game.tick = function(){
     Game.update();
