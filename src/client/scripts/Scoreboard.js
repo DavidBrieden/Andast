@@ -15,7 +15,6 @@ Scoreboard.init = function(){
 };
 
 Scoreboard.render = function(){
-    this.score++;
 	App.ctx.beginPath();
     App.ctx.lineWidth="1";
     App.ctx.strokeStyle = "black";

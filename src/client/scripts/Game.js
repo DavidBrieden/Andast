@@ -171,6 +171,7 @@ Game.movePlayer = function(x,y){
         for (var i=0;i<4;i++){
             if (Game.testRow(Game.player.position.y - Game.player.figure[i].y)==true){
                 Game.deleteRow(Game.player.position.y - Game.player.figure[i].y);
+                Scoreboard.score += 100;
             }
         }
         spawn = false;
