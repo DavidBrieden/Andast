@@ -1,6 +1,7 @@
 var Field = require('./Field.js');
 var App = require('./App.js');
 var Boxes = require('./Boxes.js');
+var Scoreboard = require('./Scoreboard.js');
 var Game = {};
 
 Game.speed = 1000;
@@ -67,6 +68,7 @@ Game.tick = function(){
 Game.render = function(){
     App.ctx.clearRect(0, 0, App.canvas.width, App.canvas.height);
     Field.render();
+    Scoreboard.render();
 };
 
 Game.update = function(){
@@ -99,7 +101,6 @@ Game.spawn = function(){
 
 Game.testRow = function(y){
     for (var i = 0; i < Field.width; i++){
-
         if (Field.field[i][y].show == false)
             return false;
 
@@ -178,6 +179,7 @@ Game.movePlayer = function(x,y){
         for (var i=0;i<4;i++){
             if (Game.testRow(Game.player.position.y - Game.player.figure[i].y)==true){
                 Game.deleteRow(Game.player.position.y - Game.player.figure[i].y);
+                Scoreboard.score += 100;
             }
         }
         spawn = false;
