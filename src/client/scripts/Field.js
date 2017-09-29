@@ -7,9 +7,9 @@ Field.init = function(){
 
     Field.offsetx = 20;
     Field.offsety = 20;
-    Field.blocksize = 10;
+    Field.blocksize = 15;
     Field.width = 20;
-    Field.height = 40;
+    Field.height = 35;
 
     Field.field = [];
     for(var x=0;x<Field.width;x++){
