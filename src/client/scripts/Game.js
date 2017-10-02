@@ -5,12 +5,15 @@ var Scoreboard = require('./Scoreboard.js');
 var Game = {};
 
 Game.speed = 1000;
+Game.nextSpawn = Math.floor(Math.random() * (Boxes.length));
 
 Game.player = {};
 
 Game.start = function(){
     setInterval(this.tick, 50);
-    Game.interval = setInterval(function(){Game.setSpeed(Game.speed/=1.01); Game.movePlayer(0,-1);}, Game.speed);
+    Game.interval = setInterval(function(){Game.movePlayer(0,-1);}, Game.speed);
+    setInterval(function(){Game.setSpeed(Game.speed*0.9);},10000);
+
     document.addEventListener("keydown", function(e){
         if (e.keyCode == '40') {
             // down arrow
@@ -57,7 +60,7 @@ Game.start = function(){
 Game.setSpeed = function(speed){
     window.clearInterval(Game.interval);
     Game.speed = speed;
-    Game.interval = setInterval(function(){Game.setSpeed(Game.speed/=1.01); Game.movePlayer(0,-1);}, Game.speed);
+    Game.interval = setInterval(function(){Game.movePlayer(0,-1);}, Game.speed);
 }
 
 Game.tick = function(){
@@ -79,7 +82,8 @@ Game.spawn = function(){
     var spawnpoint = {x: Math.floor(Field.width/2)-1,y:Field.height-3}
     Game.player.position = spawnpoint;
     // eine zufällige Figur auswählen
-    var index = Math.floor(Math.random() * (Boxes.length));
+    var index = Game.nextSpawn;
+    Game.nextSpawn = Math.floor(Math.random() * (Boxes.length));
     var figure = Array.from(Boxes[index]);
     Game.player.figure = figure;
 
