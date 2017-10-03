@@ -1,4 +1,5 @@
 node_modules/
+*.log
 
 *.sublime-workspace
 src/client/wwwroot/app.js
