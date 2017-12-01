@@ -4,8 +4,7 @@
   "description": "gamedev",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "gulp"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "David Brieden",
   "license": "ISC",
