@@ -2,6 +2,7 @@ var Field = require('./Field.js');
 var App = require('./App.js');
 var Boxes = require('./Boxes.js');
 var Scoreboard = require('./Scoreboard.js');
+var BlockDisplay = require('./BlockDisplay.js');
 var Game = {};
 
 Game.speed = 1000;
@@ -35,23 +36,7 @@ Game.start = function(){
             
             // prevent scrolling
             e.preventDefault();
-            var flip = Array.from(Game.player.figure);
-            for (var i=0;i<4;i++){
-                // Koordinate im Spielfeld setzen
-                Field.field[Game.player.position.x - Game.player.figure[i].x][Game.player.position.y - Game.player.figure[i].y] = {
-                    show: false,
-                    color: "green"
-                };
-                Game.player.figure[i]={
-                    x:0-flip[i].y,
-                    y:flip[i].x
-                };
-                /*if (Field.field[Game.player.position.x-x][Game.player.position.y - y].show==true){
-                    Game.player.figure = flip;
-                }*/
-            }  
-            // damit das Spielfeld direkt geupdatet wird
-            Game.movePlayer(0,0);
+            Game.flip();
         }
     });
 
@@ -72,6 +57,7 @@ Game.render = function(){
     App.ctx.clearRect(0, 0, App.canvas.width, App.canvas.height);
     Field.render();
     Scoreboard.render();
+    BlockDisplay.render();
 };
 
 Game.update = function(){
@@ -84,6 +70,7 @@ Game.spawn = function(){
     // eine zufällige Figur auswählen
     var index = Game.nextSpawn;
     Game.nextSpawn = Math.floor(Math.random() * (Boxes.length));
+    BlockDisplay.nextBlock = Game.nextSpawn;
     var figure = Array.from(Boxes[index]);
     Game.player.figure = figure;
 
@@ -142,6 +129,29 @@ Game.detectCollision = function(x,y){
         
     }
     return false;
+};
+
+Game.flip = function(){
+    var flip = Array.from(Game.player.figure);
+            for (var i=0;i<4;i++){
+                // Koordinate im Spielfeld setzen
+                Field.field[Game.player.position.x - Game.player.figure[i].x][Game.player.position.y - Game.player.figure[i].y] = {
+                    show: false,
+                    color: "green"
+                };
+                Game.player.figure[i]={
+                    x:0-flip[i].y,
+                    y:flip[i].x
+                };
+                /*if (Field.field[Game.player.position.x-x][Game.player.position.y - y].show==true){
+                    Game.player.figure = flip;
+                }*/
+            } 
+            if (Game.detectCollision(0,0)){
+                Game.player.figure = Array.from(flip);
+            } 
+            // damit das Spielfeld direkt geupdatet wird
+            Game.movePlayer(0,0);
 };
 
 Game.movePlayer = function(x,y){
